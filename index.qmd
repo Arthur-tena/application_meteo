@@ -13,6 +13,7 @@ from geopy.geocoders import Nominatim
 from timezonefinder import TimezoneFinder
 from PIL import Image, ImageTk
 import csv 
+import pandas as pd 
 app=Tk()
 app.title("Prévisions météorologiques de Montpellier") # on choisit le nom de l'application
 app.geometry("750x350") # on choisit la taille de l'application 

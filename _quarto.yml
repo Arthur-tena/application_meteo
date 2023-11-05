@@ -1,26 +1,35 @@
 project:
   type: website
   render: 
-  -index.qmd 
-  
+   -index.qmd 
 website:
-back-to-top-navigation: True 
-page-navigation : True
-  title: "Météo"
-  navbar:
-  title: "Météo à Montpellier sur les 4 prochains jours "
-  background: primary
-    left:
-      - icon: soleil
-       href: index.qmd
-        text: Home
-      - about.qmd
-
+ back-to-top-navigation: True 
+ page-navigation : True
+  title: "HAX712X : Météo à Montpellier"
+  tools: 
+   - icon: github
+        href: https://github.com/arthur-tena/application_meteo
+        text: GitHub
 format:
   html:
-    theme: cosmo
-    css: styles.css
     toc: true
-
-
-
+    theme:
+      spacelab
+      # light: spacelab
+    # mainfont: Atkinson Hyperlegible
+    html-math-method: katex
+    number-sections: false
+    toc-depth: 3
+    code-fold: false
+    code-tools:
+      toggle: false
+      source: false
+    code-overflow: wrap
+    highlight-style: github
+    fig-responsive: true
+    fig.align: center
+    reference-location: margin
+    citation-location: margin
+    # self-contained: true
+    # fig-format: svg
+    css: custom.scss
