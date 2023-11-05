@@ -5,7 +5,9 @@ project:
 website:
  back-to-top-navigation: True 
  page-navigation : True
-  title: "HAX712X : Météo à Montpellier"
+ title: "HAX712X : Météo à Montpellier"
+ site-url: http://arthur-tena.github.io/application_meteo/
+ repo-url: http://github.com/arthur-tena/application_meteo
   tools: 
    - icon: github
         href: https://github.com/arthur-tena/application_meteo
