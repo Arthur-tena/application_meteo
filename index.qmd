@@ -2,42 +2,6 @@
 title: "Météo Montpellier "
 ---
 
-```{python}
-from tkinter import *
-import tkinter as TK
-from datetime import *
-import requests 
-import json
-import pytz
-from geopy.geocoders import Nominatim
-from timezonefinder import TimezoneFinder
-from PIL import Image, ImageTk
-import csv 
-import pandas as pd 
-app=Tk()
-app.title("Prévisions météorologiques de Montpellier") # on choisit le nom de l'application
-app.geometry("750x350") # on choisit la taille de l'application 
-app.configure(bg="#87CEFA") #on choisit la couleur bleue ciel du fond 
-
-image_icone=PhotoImage(file="/Users/arthurtena/projet_meteo/Images/sunny_sun_cloud_weather_cloudy_icon_194237.png")
-app.iconphoto(False,image_icone)
-
-
-ville="Montpellier,fr "
-url=f"https://api.open-meteo.com/v1/meteofrance?latitude=52.52&longitude=13.41&hourly=temperature_2m"
-response = requests.get(url) 
-if response.status_code == 200:
-    data = json.loads(response.text)
-    
-    # Extraire et afficher les prévisions pour les 5 prochains jours
-    for prevision in data["list"]:
-        date = prevision["dt_txt"]
-        temperature = prevision["main"]["temp"]
-        description = prevision["weather"][0]["description"]
-        print(f"Date : {date}, Température : {temperature}°C, Description : {description}")
-else:
-    print("Échec de la demande HTTP.")
-
-app.mainloop()
-
+```python
+extraction.py
 ```
