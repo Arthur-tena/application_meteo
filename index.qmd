@@ -1,7 +1,8 @@
 ---
 title: "Météo Montpellier "
 ---
-
+Voici la météo à Montpellier sur les 4 prochains jours.
+Vous y retrouverez ainsi, la température (max et min de chaque jours), la vitesse du vent, l'heure du couché et du levé du soleil et l'humidité.
 ```python
 extraction.py
 ```

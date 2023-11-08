@@ -9,7 +9,7 @@ website:
   site-url: http://arthur-tena.github.io/application_meteo/
   repo-url: http://github.com/arthur-tena/application_meteo
   navbar:
-    title: "Software dev. for data sciences"
+    title: "HAX712X : Météo à Montpellier"
     background: primary
     search: true
     tools:
