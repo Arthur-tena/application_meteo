@@ -22,18 +22,52 @@ def date_heure():
     now=datetime.datetime.now()
     #On formate la date et l'heure
     date_format = now.strftime('%Y-%m-%d')  # Format AAAA-MM-JJ
-    heure_format = now.strftime('%H:%M')  # Format HH:MM
+    heure_format = now.strftime('%H')  # Format HH:MM
 
-    return f"{date_format}T{heure_format}" 
+    return f"{date_format}T{heure_format}:00" 
 
 print(date_heure())
 
 #On affiche le jour de la semaine 
 maintenant = datetime.datetime.now()
-print(maintenant.weekday())
-# Obtenir le jour de la semaine actuel (en texte)
+
+# Obtenir le jour de la semaine actuel (en anglais)
 jour_semaine = maintenant.strftime('%A')  # Format du jour de la semaine (par exemple : "lundi", "mardi", etc.)
-print("Jour de la semaine actuel :", jour_semaine)
+
+#On rends les jours de la semaine en français
+def jour():
+    if (jour_semaine=='Monday'):
+     return ('Lundi')
+    elif (jour_semaine=='Tuesday'):
+      return 'Mardi'
+    elif (jour_semaine=='Wednesday'):
+     return 'Mercredi'
+    elif (jour_semaine=='Thursday'):
+     return 'Jeudi'
+    elif (jour_semaine=='Friday'):
+     return 'Vendredi'
+    elif (jour_semaine=='Saturday'):
+     return 'Samedi'
+    else : return 'Dimanche'
+
+#On affecte à chaque jour un chiffre pour pouvoir le retrouver facilement 
+correspondance = {
+    'Lundi': 1,
+    'Mardi': 2,
+    'Mercredi': 3,
+    'Jeudi': 4,
+    'Vendredi': 5,
+    'Samedi':6,
+    'Dimanche':7
+}
+j=correspondance.get(jour()) # jour actuelle
+j1=correspondance.get(jour())+1
+j2=correspondance.get(jour())+2
+j3=correspondance.get(jour())+3
+print (j,j1,j2,j3)
+
+
+print("Jour de la semaine actuel :", jour())
 
 
 #On crée une boucle qui nous donne la température à l'heure actuelle
@@ -42,7 +76,7 @@ for i in range(2, 97):
         print(data.iloc[i, 2])
 
 #On met l'URL de la clef API pour la retrouver avec requests
-url= 'https://api.open-meteo.com/v1/meteofrance?latitude=52.52&longitude=13.41&hourly=temperature_2m'
+url= 'https://api.open-meteo.com/v1/meteofrance?latitude=52.52&longitude=13.41&hourly=temperature_2m,relative_humidity_2m,rain,wind_speed_10m&daily=temperature_2m_max,temperature_2m_min,sunrise,sunset&timezone=Europe%2FBerlin'
 
 reponse=requests.get(url)
 
@@ -52,12 +86,23 @@ api_key = 'API météo Montpellier'
 headers = {
     'Authorization': f'Bearer {api_key}'
 }
+params = {
+	"latitude": 52.52,
+	"longitude": 13.41,
+	"hourly": ["temperature_2m", "relative_humidity_2m", "rain", "wind_speed_10m"],
+	"daily": ["temperature_2m_max", "temperature_2m_min", "sunrise", "sunset"],
+}
 
-# Effectuez la requête GET avec l'en-tête contenant la clé API
-response = requests.get(url, headers=headers)
+#On crée une matrice qui sera notre tableau à afficher à la fin 
+tab=np.zeros((5,5))
+print(tab)
+
+response = requests.get(url, headers=headers, params=params)
 if response.status_code == 200:
     # Affichez le contenu de la réponse
-    print(response.json())
+    data=response.json()
+    df=pd.DataFrame(data)
+    
 else:
     print('La requête a échoué avec le code d\'état :', response.status_code)
 
