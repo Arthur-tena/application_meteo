@@ -61,13 +61,23 @@ correspondance = {
     'Dimanche':7
 }
 j=correspondance.get(jour()) # jour actuelle
-j1=correspondance.get(jour())+1
-j2=correspondance.get(jour())+2
-j3=correspondance.get(jour())+3
-print (j,j1,j2,j3)
 
+def jours():
+   if (j==1):
+      return(['Lundi', 'Mardi', 'Mercredi', 'Jeudi'])
+   elif(j==2):
+      return(['Mardi', 'Mercredi', 'Jeudi', 'Vendredi'])
+   elif(j==3):
+      return(['Mercredi', 'Jeudi', 'Vendredi', 'Samedi'])
+   elif(j==4):
+      return(['Jeudi', 'Vendredi', 'Samedi', 'Dimanche'])
+   elif(j==5):
+      return(['Vendredi', 'Samedi', 'Dimanche', 'Lundi'])
+   elif(j==6):
+      return(['Samedi', 'Dimanche', 'Lundi','Mardi'])
+   else : return('Dimanche', 'Lundi','Mardi', 'Mercredi')
 
-print("Jour de la semaine actuel :", jour())
+print(jours())
 
 
 #On crée une boucle qui nous donne la température à l'heure actuelle
@@ -95,13 +105,23 @@ params = {
 
 #On crée une matrice qui sera notre tableau à afficher à la fin 
 tab=np.zeros((5,5))
-print(tab)
+Tab=pd.DataFrame(tab)
+Tab.loc[0,1]=jours()[0]
+Tab.loc[0,2]=jours()[1]
+Tab.loc[0,3]=jours()[2]
+Tab.loc[0,4]=jours()[3]
+Tab.loc[1,0]== 'Température'
+Tab.loc[2,0]== 'Humidité'
+Tab.loc[3,0]== 'Vitesse du vent'
+Tab.loc[4,0]== 'Sunset/Sunrise'
+print(Tab)
 
 response = requests.get(url, headers=headers, params=params)
 if response.status_code == 200:
     # Affichez le contenu de la réponse
     data=response.json()
     df=pd.DataFrame(data)
+    
     
 else:
     print('La requête a échoué avec le code d\'état :', response.status_code)
