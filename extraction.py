@@ -105,16 +105,12 @@ params = {
 
 
 #On crée une matrice qui sera notre tableau à afficher à la fin 
-tab=np.zeros((5,5))
-Tab=pd.DataFrame(tab)
-Tab.loc[0,1]=(jours()[0])
-Tab.loc[0,2]=(jours()[1])
-Tab.loc[0,3]=(jours()[2])
-Tab.loc[0,4]=(jours()[3])
-Tab.loc[1,0]==('Température')
-#Tab.loc[2,0]== 'Humidité'
-#Tab.loc[3,0]== 'Vitesse du vent'
-#Tab.loc[4,0]== 'Sunset/Sunrise'
+tab=np.zeros((4,4))
+Tab=pd.DataFrame(tab, index=['Température ', 'Humidité', 'Vitesse du vent', 'Sunset/Sunrise'], columns=[jours()[0],jours()[1],jours()[2], jours()[3]])
+#Tab.loc[0,0]=jours()[0]
+#Tab.loc[0,1]=jours()[1]
+#Tab.loc[0,2]=jours()[2]
+#Tab.loc[0,3]=jours()[3]
 #print(Tab)
 
 response = requests.get(url, headers=headers, params=params)
