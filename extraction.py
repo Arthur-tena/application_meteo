@@ -103,24 +103,36 @@ params = {
 	"daily": ["temperature_2m_max", "temperature_2m_min", "sunrise", "sunset"],
 }
 
+
 #On crée une matrice qui sera notre tableau à afficher à la fin 
 tab=np.zeros((5,5))
 Tab=pd.DataFrame(tab)
-Tab.loc[0,1]=jours()[0]
-Tab.loc[0,2]=jours()[1]
-Tab.loc[0,3]=jours()[2]
-Tab.loc[0,4]=jours()[3]
-Tab.loc[1,0]== 'Température'
-Tab.loc[2,0]== 'Humidité'
-Tab.loc[3,0]== 'Vitesse du vent'
-Tab.loc[4,0]== 'Sunset/Sunrise'
-print(Tab)
+Tab.loc[0,1]=(jours()[0])
+Tab.loc[0,2]=(jours()[1])
+Tab.loc[0,3]=(jours()[2])
+Tab.loc[0,4]=(jours()[3])
+Tab.loc[1,0]==('Température')
+#Tab.loc[2,0]== 'Humidité'
+#Tab.loc[3,0]== 'Vitesse du vent'
+#Tab.loc[4,0]== 'Sunset/Sunrise'
+#print(Tab)
 
 response = requests.get(url, headers=headers, params=params)
 if response.status_code == 200:
     # Affichez le contenu de la réponse
     data=response.json()
     df=pd.DataFrame(data)
+    #On classe toutes nos données 
+    temp=data[0]['hourly']['temperature_2m']
+    humidity=data[0]['hourly']['relative_humidity_2m']
+    wind=data[0]['hourly']['wind_speed_10m']
+    temp_max=data[0]['daily']['temperature_2m_max']
+    temp_min=data[0]['daily']['temperature_2m_min']
+    sunrise=data[0]['daily']['sunrise']
+    sunset=data[0]['daily']['sunset']
+    print(Tab)
+
+    #print(df)
     
     
 else:
