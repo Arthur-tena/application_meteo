@@ -9,13 +9,16 @@ website:
   site-url: http://arthur-tena.github.io/application_meteo/
   repo-url: http://github.com/arthur-tena/application_meteo
   navbar:
-    title: "HAX712X : Météo à Montpellier"
+    title: "HAX712X : Développement logiciel"
     background: primary
     search: true
     tools:
       - icon: github
         href: http://github.com/arthur-tena/application_meteo
         text: GitHub
+      -icon: sun
+       href: https://open-meteo.com/en/docs/meteofrance-api#hourly=temperature_2m,relative_humidity_2m,rain,wind_speed_10m&daily=temperature_2m_max,temperature_2m_min,sunrise,sunset&timezone=GMT
+       text: open météo
 format:
   html:
     toc: true
