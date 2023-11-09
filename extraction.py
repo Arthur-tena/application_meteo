@@ -104,33 +104,25 @@ params = {
 }
 
 
-#On crée une matrice qui sera notre tableau à afficher à la fin 
-tab=np.zeros((4,4))
-Tab=pd.DataFrame(tab, index=['Température ', 'Humidité', 'Vitesse du vent', 'Sunset/Sunrise'], columns=[jours()[0],jours()[1],jours()[2], jours()[3]])
-#Tab.loc[0,0]=jours()[0]
-#Tab.loc[0,1]=jours()[1]
-#Tab.loc[0,2]=jours()[2]
-#Tab.loc[0,3]=jours()[3]
-#print(Tab)
 
 response = requests.get(url, headers=headers, params=params)
 if response.status_code == 200:
     # Affichez le contenu de la réponse
     data=response.json()
     df=pd.DataFrame(data)
+    #On crée une matrice qui sera notre tableau à afficher à la fin 
+    tab=np.zeros((4,4))
+    Tab=pd.DataFrame(tab, index=['Température ', 'Humidité', 'Vitesse du vent', 'Sunset/Sunrise'], columns=[jours()[0],jours()[1],jours()[2], jours()[3]])
     #On classe toutes nos données 
     temp=data[0]['hourly']['temperature_2m']
     humidity=data[0]['hourly']['relative_humidity_2m']
     wind=data[0]['hourly']['wind_speed_10m']
+    #rain=data[0]['hourly']['rain']
     temp_max=data[0]['daily']['temperature_2m_max']
     temp_min=data[0]['daily']['temperature_2m_min']
     sunrise=data[0]['daily']['sunrise']
     sunset=data[0]['daily']['sunset']
-    print(Tab)
-
-    #print(df)
-    
-    
+    print(sunset)   
 else:
     print('La requête a échoué avec le code d\'état :', response.status_code)
 

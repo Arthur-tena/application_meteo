@@ -16,7 +16,7 @@ website:
       - icon: github
         href: http://github.com/arthur-tena/application_meteo
         text: GitHub
-      -icon: sun
+      -icon: sunny_sun_cloud_weather_cloudy_icon_194237.png
        href: https://open-meteo.com/en/docs/meteofrance-api#hourly=temperature_2m,relative_humidity_2m,rain,wind_speed_10m&daily=temperature_2m_max,temperature_2m_min,sunrise,sunset&timezone=GMT
        text: open météo
 format:
