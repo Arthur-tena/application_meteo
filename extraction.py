@@ -4,29 +4,22 @@ import numpy as np
 import requests
 import json
 import datetime 
+from more_itertools import chunked
 
 #On charge les données de meteo à partir d'un fichier CSV
-data = pd.read_csv("/Users/arthurtena/Documents/application_meteo/data/weather.csv")
+#data = pd.read_csv("/Users/arthurtena/Documents/application_meteo/data/weather.csv")
 
 # Afficher les premières lignes du DataFrame pour vérifier les données
-print(data.head())
-col_name=data.columns
+#print(data.head())
+#col_name=data.columns
 
 #Afficher les données pertinantes :
-data=data.drop(columns=['elevation','utc_offset_seconds','timezone','timezone_abbreviation'])
-data=data.drop(data.index[0:1])
-print(data.head)
+#data=data.drop(columns=['elevation','utc_offset_seconds','timezone','timezone_abbreviation'])
+#data=data.drop(data.index[0:1])
+#print(data.head)
 
 #On crée une fonction qui donne la date et l'heure actuelle 
-def date_heure():
-    now=datetime.datetime.now()
-    #On formate la date et l'heure
-    date_format = now.strftime('%Y-%m-%d')  # Format AAAA-MM-JJ
-    heure_format = now.strftime('%H')  # Format HH:MM
 
-    return f"{date_format}T{heure_format}:00" 
-
-print(date_heure())
 
 #On affiche le jour de la semaine 
 maintenant = datetime.datetime.now()
@@ -79,12 +72,6 @@ def jours():
 
 print(jours())
 
-
-#On crée une boucle qui nous donne la température à l'heure actuelle
-for i in range(2, 97):
-    if date_heure()==data.iloc[i,1]:
-        print(data.iloc[i, 2])
-
 #On met l'URL de la clef API pour la retrouver avec requests
 url= 'https://api.open-meteo.com/v1/meteofrance?latitude=43.62&longitude=3.86&hourly=temperature_2m,relative_humidity_2m,precipitation,wind_speed_10m&daily=temperature_2m_max,temperature_2m_min,sunrise,sunset&timezone=Europe%2FBerlin'
 
@@ -107,19 +94,42 @@ response = requests.get(url, headers=headers, params=params)
 if response.status_code == 200:
     # Affichez le contenu de la réponse
     data=response.json()
-    df=pd.DataFrame(data)
+    def date_heure():
+      now=datetime.datetime.now()
+      #On formate la date et l'heure
+      date_format = now.strftime('%Y-%m-%d')  # Format AAAA-MM-JJ
+      heure_format = now.strftime('%H')  # Format HH
+      return f"{date_format}T{heure_format}:00" 
+    print(date_heure())
+
     #On crée une matrice qui sera notre tableau à afficher à la fin 
     tab=np.zeros((5,4))
     Tab=pd.DataFrame(tab, index=['Température (en °C)', 'Humidité (en %)', 'Vitesse du vent (en km/h)', 'Précipitation max (en mm)','Sunset/Sunrise '], columns=[jours()[0],jours()[1],jours()[2], jours()[3]])
-    #On classe toutes nos données 
+    #On classe toutes nos données et on en fait des listes de par jour
+    time=data[0]['hourly']['time']
+    time=list(chunked(time, 24))
+    print(len(time))
     temp=data[0]['hourly']['temperature_2m']
+    temp=list(chunked(temp, 24))
+    print(len(temp))
     humidity=data[0]['hourly']['relative_humidity_2m']
+    humidity=list(chunked(humidity, 24))
+    print(len(humidity))
     wind=data[0]['hourly']['wind_speed_10m']
+    wind=list(chunked(wind, 24))
+    print(len(wind))
     precipitation=data[0]['hourly']['precipitation']
+    precipitation=list(chunked(precipitation, 24))
+    print(len(precipitation))
     temp_max=data[0]['daily']['temperature_2m_max']
+    print(len(temp_max))
     temp_min=data[0]['daily']['temperature_2m_min']
+    print(len(temp_min))
     sunrise=data[0]['daily']['sunrise']
+    print(len(sunrise))
     sunset=data[0]['daily']['sunset']
+    print(len(sunset))
+
     
 
        
