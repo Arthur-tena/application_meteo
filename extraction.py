@@ -86,7 +86,7 @@ for i in range(2, 97):
         print(data.iloc[i, 2])
 
 #On met l'URL de la clef API pour la retrouver avec requests
-url= 'https://api.open-meteo.com/v1/meteofrance?latitude=52.52&longitude=13.41&hourly=temperature_2m,relative_humidity_2m,rain,wind_speed_10m&daily=temperature_2m_max,temperature_2m_min,sunrise,sunset&timezone=Europe%2FBerlin'
+url= 'https://api.open-meteo.com/v1/meteofrance?latitude=43.62&longitude=3.86&hourly=temperature_2m,relative_humidity_2m,precipitation,wind_speed_10m&daily=temperature_2m_max,temperature_2m_min,sunrise,sunset&timezone=Europe%2FBerlin'
 
 reponse=requests.get(url)
 
@@ -103,26 +103,26 @@ params = {
 	"daily": ["temperature_2m_max", "temperature_2m_min", "sunrise", "sunset"],
 }
 
-
-
 response = requests.get(url, headers=headers, params=params)
 if response.status_code == 200:
     # Affichez le contenu de la réponse
     data=response.json()
     df=pd.DataFrame(data)
     #On crée une matrice qui sera notre tableau à afficher à la fin 
-    tab=np.zeros((4,4))
-    Tab=pd.DataFrame(tab, index=['Température ', 'Humidité', 'Vitesse du vent', 'Sunset/Sunrise'], columns=[jours()[0],jours()[1],jours()[2], jours()[3]])
+    tab=np.zeros((5,4))
+    Tab=pd.DataFrame(tab, index=['Température (en °C)', 'Humidité (en %)', 'Vitesse du vent (en km/h)', 'Précipitation max (en mm)','Sunset/Sunrise '], columns=[jours()[0],jours()[1],jours()[2], jours()[3]])
     #On classe toutes nos données 
     temp=data[0]['hourly']['temperature_2m']
     humidity=data[0]['hourly']['relative_humidity_2m']
     wind=data[0]['hourly']['wind_speed_10m']
-    #rain=data[0]['hourly']['rain']
+    precipitation=data[0]['hourly']['precipitation']
     temp_max=data[0]['daily']['temperature_2m_max']
     temp_min=data[0]['daily']['temperature_2m_min']
     sunrise=data[0]['daily']['sunrise']
     sunset=data[0]['daily']['sunset']
-    print(sunset)   
+    
+
+       
 else:
     print('La requête a échoué avec le code d\'état :', response.status_code)
 
