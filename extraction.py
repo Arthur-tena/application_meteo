@@ -108,31 +108,29 @@ if response.status_code == 200:
     #On classe toutes nos données et on en fait des listes de par jour
     time=data[0]['hourly']['time']
     time=list(chunked(time, 24))
-    print(len(time))
     temp=data[0]['hourly']['temperature_2m']
     temp=list(chunked(temp, 24))
-    print(len(temp))
     humidity=data[0]['hourly']['relative_humidity_2m']
     humidity=list(chunked(humidity, 24))
-    print(len(humidity))
     wind=data[0]['hourly']['wind_speed_10m']
     wind=list(chunked(wind, 24))
-    print(len(wind))
     precipitation=data[0]['hourly']['precipitation']
     precipitation=list(chunked(precipitation, 24))
-    print(len(precipitation))
     temp_max=data[0]['daily']['temperature_2m_max']
-    print(len(temp_max))
     temp_min=data[0]['daily']['temperature_2m_min']
-    print(len(temp_min))
+    Tab.iat[0,1]=[temp_max[1],temp_min[1]]
+    Tab.iat[0,2]=[temp_max[2],temp_min[2]]
+    Tab.iat[0,3]=[temp_max[3],temp_min[3]]
     sunrise=data[0]['daily']['sunrise']
-    print(len(sunrise))
     sunset=data[0]['daily']['sunset']
-    print(len(sunset))
+    Tab.iat[4,0]=[sunset[0],sunrise[0]]
+    Tab.iat[4,1]=[sunset[1],sunrise[1]]
+    Tab.iat[4,2]=[sunset[2],sunrise[2]]
+    Tab.iat[4,3]=[sunset[3],sunrise[3]]
 
     
 
-       
+
 else:
     print('La requête a échoué avec le code d\'état :', response.status_code)
 
