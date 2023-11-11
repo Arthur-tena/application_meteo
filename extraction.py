@@ -100,11 +100,7 @@ if response.status_code == 200:
       date_format = now.strftime('%Y-%m-%d')  # Format AAAA-MM-JJ
       heure_format = now.strftime('%H')  # Format HH
       return f"{date_format}T{heure_format}:00" 
-    print(date_heure())
 
-    #On crée une matrice qui sera notre tableau à afficher à la fin 
-    tab=np.zeros((5,4))
-    Tab=pd.DataFrame(tab, index=['Température (en °C)', 'Humidité (en %)', 'Vitesse du vent (en km/h)', 'Précipitation max (en mm)','Sunset/Sunrise '], columns=[jours()[0],jours()[1],jours()[2], jours()[3]])
     #On classe toutes nos données et on en fait des listes de par jour
     time=data[0]['hourly']['time']
     time=list(chunked(time, 24))
@@ -118,16 +114,17 @@ if response.status_code == 200:
     precipitation=list(chunked(precipitation, 24))
     temp_max=data[0]['daily']['temperature_2m_max']
     temp_min=data[0]['daily']['temperature_2m_min']
-    Tab.iat[0,1]=[temp_max[1],temp_min[1]]
-    Tab.iat[0,2]=[temp_max[2],temp_min[2]]
-    Tab.iat[0,3]=[temp_max[3],temp_min[3]]
+     #'Température Maximale': [f'{tempmax} °C' for tempmax in tempmax]
     sunrise=data[0]['daily']['sunrise']
     sunset=data[0]['daily']['sunset']
-    Tab.iat[4,0]=[sunset[0],sunrise[0]]
-    Tab.iat[4,1]=[sunset[1],sunrise[1]]
-    Tab.iat[4,2]=[sunset[2],sunrise[2]]
-    Tab.iat[4,3]=[sunset[3],sunrise[3]]
-
+     #heure() sera une fonction qui me renverra une liste des éléments à l'heure actuelle à l'heure actuelle
+    tab=[[f'{temp_max[1],temp_min[1]}',f'{temp_max[2],temp_min[2]}',f'{temp_max[3],temp_min[3]}'],
+         [f'{np.mean(humidity[1])}', f'{np.mean(humidity[2])}',f'{np.mean(humidity[3])}'],
+         [f'{(np.max(wind[1]),np.min(wind[1]))}', f'{(np.max(wind[2]),np.min(wind[2]))}',f'{(np.max(wind[3]),np.min(wind[3]))}'],
+         [f'{(sunset[0],sunrise[0])}',f'{(sunset[1],sunrise[1])}', f'{(sunset[2],sunrise[2])}',f'{(sunset[3],sunrise[3])}'],
+    ]
+    Tab=pd.DataFrame(tab)
+    print(Tab)
     
 
 
