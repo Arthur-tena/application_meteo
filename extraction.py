@@ -5,22 +5,6 @@ import requests
 import json
 import datetime 
 from more_itertools import chunked
-
-#On charge les données de meteo à partir d'un fichier CSV
-#data = pd.read_csv("/Users/arthurtena/Documents/application_meteo/data/weather.csv")
-
-# Afficher les premières lignes du DataFrame pour vérifier les données
-#print(data.head())
-#col_name=data.columns
-
-#Afficher les données pertinantes :
-#data=data.drop(columns=['elevation','utc_offset_seconds','timezone','timezone_abbreviation'])
-#data=data.drop(data.index[0:1])
-#print(data.head)
-
-#On crée une fonction qui donne la date et l'heure actuelle 
-
-
 #On affiche le jour de la semaine 
 maintenant = datetime.datetime.now()
 
@@ -122,15 +106,14 @@ if response.status_code == 200:
           cpt=cpt+1 #on regarde a quel itération est la date actuelle poyr récupérer les données à l'heure actuelle
       return [temp[0][cpt],humidity[0][cpt],wind[0][cpt], precipitation[0][cpt]]
     print(heure())
-     #heure() sera une fonction qui me renverra une liste des éléments à l'heure actuelle
-    #tab=[[f'{temp_max[1],temp_min[1]}',f'{temp_max[2],temp_min[2]}',f'{temp_max[3],temp_min[3]}'],
-        # [f'{np.mean(humidity[1])}', f'{np.mean(humidity[2])}',f'{np.mean(humidity[3])}'],
-         #[f'{(np.max(wind[1]),np.min(wind[1]))}', f'{(np.max(wind[2]),np.min(wind[2]))}',f'{(np.max(wind[3]),np.min(wind[3]))}'],
-         #[f'{np.moy(precipitation[0])}', f'{(np.max(precipitation[1]),np.moy(precipitation[1]))}',f'{(np.max(precipitation[2]),np.mean(precipitation[2]))}',f'{(np.max(precipitation[3]),np.mean(precipitation[3]))}'],
-       # [f'{(sunset[0],sunrise[0])}',f'{(sunset[1],sunrise[1])}', f'{(sunset[2],sunrise[2])}',f'{(sunset[3],sunrise[3])}'],
-    #]
-    #Tab=pd.DataFrame(tab)
+    #Tab=pd.DataFrame({'Température (en°C)': [f'{(heure()[0],temp_max[0]),(temp_max[1],temp_min[1]),(temp_max[2],temp_min[2]),(temp_max[3],temp_min[3])}'],
+    #     'Humidité (en %)':[f'{(heure()[1]),np.mean(humidity[1]),np.mean(humidity[2]),np.mean(humidity[3])}'],
+    #     'Vitesse du vent (en km/h)':[f'{(heure()[2],np.mean(wind[1])),(np.max(wind[1]),np.min(wind[1])),(np.max(wind[2]),np.min(wind[2])),(np.max(wind[3]),np.min(wind[3]))}'],
+    #     'Précipitation (en mm)':[f'{(heure()[3],np.mean(precipitation[0])),(np.max(precipitation[1]),np.mean(precipitation[1])),(np.max(precipitation[2]),np.mean(precipitation[2])),(np.max(precipitation[3]),np.mean(precipitation[3]))}'],
+    #     'Sunset/Sunrise':[f'{(sunset[0],sunrise[0]),(sunset[1],sunrise[1]),(sunset[2],sunrise[2]),(sunset[3],sunrise[3])}'],
+    #   })
     #print(Tab)
+    
     
 
 
