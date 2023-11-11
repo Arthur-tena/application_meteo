@@ -70,7 +70,6 @@ def jours():
       return(['Samedi', 'Dimanche', 'Lundi','Mardi'])
    else : return('Dimanche', 'Lundi','Mardi', 'Mercredi')
 
-print(jours())
 
 #On met l'URL de la clef API pour la retrouver avec requests
 url= 'https://api.open-meteo.com/v1/meteofrance?latitude=43.62&longitude=3.86&hourly=temperature_2m,relative_humidity_2m,precipitation,wind_speed_10m&daily=temperature_2m_max,temperature_2m_min,sunrise,sunset&timezone=Europe%2FBerlin'
@@ -100,10 +99,9 @@ if response.status_code == 200:
       date_format = now.strftime('%Y-%m-%d')  # Format AAAA-MM-JJ
       heure_format = now.strftime('%H')  # Format HH
       return f"{date_format}T{heure_format}:00" 
-
-    #On classe toutes nos données et on en fait des listes de par jour
     time=data[0]['hourly']['time']
     time=list(chunked(time, 24))
+    #On classe toutes nos données et on en fait des listes de par jour
     temp=data[0]['hourly']['temperature_2m']
     temp=list(chunked(temp, 24))
     humidity=data[0]['hourly']['relative_humidity_2m']
@@ -114,17 +112,25 @@ if response.status_code == 200:
     precipitation=list(chunked(precipitation, 24))
     temp_max=data[0]['daily']['temperature_2m_max']
     temp_min=data[0]['daily']['temperature_2m_min']
-     #'Température Maximale': [f'{tempmax} °C' for tempmax in tempmax]
+     #Température Maximale': [f'{tempmax} °C' for tempmax in tempmax]
     sunrise=data[0]['daily']['sunrise']
     sunset=data[0]['daily']['sunset']
-     #heure() sera une fonction qui me renverra une liste des éléments à l'heure actuelle à l'heure actuelle
-    tab=[[f'{temp_max[1],temp_min[1]}',f'{temp_max[2],temp_min[2]}',f'{temp_max[3],temp_min[3]}'],
-         [f'{np.mean(humidity[1])}', f'{np.mean(humidity[2])}',f'{np.mean(humidity[3])}'],
-         [f'{(np.max(wind[1]),np.min(wind[1]))}', f'{(np.max(wind[2]),np.min(wind[2]))}',f'{(np.max(wind[3]),np.min(wind[3]))}'],
-         [f'{(sunset[0],sunrise[0])}',f'{(sunset[1],sunrise[1])}', f'{(sunset[2],sunrise[2])}',f'{(sunset[3],sunrise[3])}'],
-    ]
-    Tab=pd.DataFrame(tab)
-    print(Tab)
+    def heure() :
+      cpt=0
+      for i in range(24):
+        while (time[0][i]!=date_heure()):
+          cpt=cpt+1 #on regarde a quel itération est la date actuelle poyr récupérer les données à l'heure actuelle
+      return [temp[0][cpt],humidity[0][cpt],wind[0][cpt], precipitation[0][cpt]]
+    print(heure())
+     #heure() sera une fonction qui me renverra une liste des éléments à l'heure actuelle
+    #tab=[[f'{temp_max[1],temp_min[1]}',f'{temp_max[2],temp_min[2]}',f'{temp_max[3],temp_min[3]}'],
+        # [f'{np.mean(humidity[1])}', f'{np.mean(humidity[2])}',f'{np.mean(humidity[3])}'],
+         #[f'{(np.max(wind[1]),np.min(wind[1]))}', f'{(np.max(wind[2]),np.min(wind[2]))}',f'{(np.max(wind[3]),np.min(wind[3]))}'],
+         #[f'{np.moy(precipitation[0])}', f'{(np.max(precipitation[1]),np.moy(precipitation[1]))}',f'{(np.max(precipitation[2]),np.mean(precipitation[2]))}',f'{(np.max(precipitation[3]),np.mean(precipitation[3]))}'],
+       # [f'{(sunset[0],sunrise[0])}',f'{(sunset[1],sunrise[1])}', f'{(sunset[2],sunrise[2])}',f'{(sunset[3],sunrise[3])}'],
+    #]
+    #Tab=pd.DataFrame(tab)
+    #print(Tab)
     
 
 
