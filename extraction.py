@@ -21,50 +21,6 @@ date_fin= date_fin.strftime('%Y-%m-%d')
 # Obtenir le jour de la semaine actuel (en anglais)
 jour_semaine = maintenant.strftime('%A')  # Format du jour de la semaine (par exemple : "lundi", "mardi", etc.)
 
-#On rends les jours de la semaine en français
-def jour():
-    if (jour_semaine=='Monday'):
-     return ('Lundi')
-    elif (jour_semaine=='Tuesday'):
-      return 'Mardi'
-    elif (jour_semaine=='Wednesday'):
-     return 'Mercredi'
-    elif (jour_semaine=='Thursday'):
-     return 'Jeudi'
-    elif (jour_semaine=='Friday'):
-     return 'Vendredi'
-    elif (jour_semaine=='Saturday'):
-     return 'Samedi'
-    else : return 'Dimanche'
-
-#On affecte à chaque jour un chiffre pour pouvoir le retrouver facilement 
-correspondance = {
-    'Lundi': 1,
-    'Mardi': 2,
-    'Mercredi': 3,
-    'Jeudi': 4,
-    'Vendredi': 5,
-    'Samedi':6,
-    'Dimanche':7
-}
-j=correspondance.get(jour()) # jour actuelle
-
-def jours():
-   if (j==1):
-      return(['Lundi', 'Mardi', 'Mercredi', 'Jeudi'])
-   elif(j==2):
-      return(['Mardi', 'Mercredi', 'Jeudi', 'Vendredi'])
-   elif(j==3):
-      return(['Mercredi', 'Jeudi', 'Vendredi', 'Samedi'])
-   elif(j==4):
-      return(['Jeudi', 'Vendredi', 'Samedi', 'Dimanche'])
-   elif(j==5):
-      return(['Vendredi', 'Samedi', 'Dimanche', 'Lundi'])
-   elif(j==6):
-      return(['Samedi', 'Dimanche', 'Lundi','Mardi'])
-   else : return('Dimanche', 'Lundi','Mardi', 'Mercredi')
-
-
 #On met l'URL de la clef API pour la retrouver avec requests
 url= 'https://api.open-meteo.com/v1/meteofrance?latitude=43.62&longitude=3.86&hourly=temperature_2m,relative_humidity_2m,precipitation,wind_speed_10m&daily=temperature_2m_max,temperature_2m_min,sunrise,sunset&timezone=Europe%2FBerlin'
 meteo_url = f'{url}&start_date={date_debut}&end_date={date_fin}'
@@ -79,7 +35,7 @@ headers = {
 params = {
 	"latitude": 52.52,
 	"longitude": 13.41,
-	"hourly": ["temperature_2m", "relative_humidity_2m", "rain", "wind_speed_10m"],
+	"hourly": ["temperature_2m", "relative_humidity_2m", "precipitation", "wind_speed_10m"],
 	"daily": ["temperature_2m_max", "temperature_2m_min", "sunrise", "sunset"],
 }
 
