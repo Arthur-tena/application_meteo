@@ -4,7 +4,6 @@ project:
     - index.qmd
 website:
   back-to-top-navigation: true
-  page-navigation: true # true not working in website
   title: "HAX712X : Météo à Montpellier"
   site-url: http://arthur-tena.github.io/application_meteo/
   repo-url: http://github.com/arthur-tena/application_meteo

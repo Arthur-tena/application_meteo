@@ -131,32 +131,4 @@ if response.status_code == 200:
  Tab=pd.DataFrame(tab,index=['Temperature','Humidite','Vitesse du vent$','Precipitation','Sunrise/Sunset'],
     columns=[jours()[0],jours()[1],jours()[2], jours()[3]])
  html_Tab = Tab.to_html('meteo.html')
- print(html_Tab)
- #display(HTML(html_Tab))
-
-
-
-
- 
-    
-
- 
-
-
- 
-
- 
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
+ display(HTML(html_Tab))
