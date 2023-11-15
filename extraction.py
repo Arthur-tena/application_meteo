@@ -125,9 +125,9 @@ if response.status_code == 200:
       [Pluie[i] for i in range(4)],
       [Soleil[i] for i in range(4)]
       ]
- Tab=pd.DataFrame(tab,index=['Température (en°C)','Humidité (en %)','Vitesse du vent (en km/h)','Précipitation (en mm)','Sunrise/Sunset'],
+ Tab=pd.DataFrame(tab,index=['Temperature (en °C)','Humidite (en %)','Vitesse du vent (en km/h)','Precipitation (en mm)','Sunrise/Sunset'],
     columns=[jours()[0],jours()[1],jours()[2], jours()[3]])
- html_Tab = Tab.to_html('meteo.html', index=False)
+ html_Tab = Tab.to_html('meteo.html')
  display(HTML(html_Tab))
 
 
