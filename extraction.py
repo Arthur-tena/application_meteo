@@ -9,8 +9,7 @@ from IPython.display import display, HTML
 #On affiche le jour de la semaine 
 maintenant = datetime.datetime.now()
 
-
-# Calculez la date de fin (5 jours à partir de la date actuelle).
+# Calculez la date de fin 
 date_fin = maintenant + datetime.timedelta(days=4)
 
 # Formattez les dates au format AAAA-MM-JJ.
@@ -107,27 +106,54 @@ if response.status_code == 200:
  precipitation=list(chunked(precipitation, 24))
  temp_max=data[0]['daily']['temperature_2m_max']
  temp_min=data[0]['daily']['temperature_2m_min']
- #Température Maximale': [f'{tempmax} °C' for tempmax in tempmax]
  sunrise=data[0]['daily']['sunrise']
  sunset=data[0]['daily']['sunset']
- def heure() :
-    cpt=0
+ def heure():
     for i in range(24):
-       while (time[0][i]!=date_heure()):
-          cpt=cpt+1 #on regarde a quel itération est la date actuelle poyr récupérer les données à l'heure actuelle
-    return [temp[0][cpt],humidity[0][cpt],wind[0][cpt], precipitation[0][cpt]]
- print(heure())
- Tab=pd.DataFrame({'Température (en°C)': [f'{np.array(heure()[0],temp_max[0]),np.array(temp_max[1],temp_min[1]),np.array(temp_max[2],temp_min[2]),np.array(temp_max[3],temp_min[3])}'],
-    'Humidité (en %)':[f'{np.array(heure()[1]),np.mean(humidity[1]),np.array(np.mean(humidity[2])),np.array(np.mean(humidity[3]))}'],
-    'Vitesse du vent (en km/h)':[f'{np.array(heure()[2],np.mean(wind[1])),np.array(np.max(wind[1]),np.min(wind[1])),np.array(np.max(wind[2]),np.min(wind[2])),np.array(np.max(wind[3]),np.min(wind[3]))}'],
-    'Précipitation (en mm)':[f'{np.array(heure()[3],np.mean(precipitation[0])),np.array(np.max(precipitation[1]),np.mean(precipitation[1])),np.array(np.max(precipitation[2]),np.mean(precipitation[2])),np.array(np.max(precipitation[3]),np.mean(precipitation[3]))}'],
-    'Sunset/Sunrise':[f'{np.array(sunset[0],sunrise[0]),np.array(sunset[1],sunrise[1]),np.array(sunset[2],sunrise[2]),np.array(sunset[3],sunrise[3])}'],
-    }, columns=[jours()[0],jours()[1],jours()[2], jours()[3]])
+       time[0][i]=time[0][i+1]
+       a=time[0][i]==date_heure()
+       if (a==True):
+          return (i)
+ Température=[(temp[0][heure()],temp_max[0]),(temp_max[1],temp_min[1]),(temp_max[2],temp_min[2]),(temp_max[3],temp_min[3])]
+ Humidité=[(humidity[0][heure()],np.mean(humidity[0])),(np.mean(humidity[1]),np.max(humidity[1])),(np.mean(humidity[2]),np.max(humidity[2])),(np.mean(humidity[3]),np.max(humidity[3]))]
+ Vent=[(wind[0][heure()],np.mean(wind[1])),(np.max(wind[1]),np.min(wind[1])),(np.max(wind[2]),np.min(wind[2])),(np.max(wind[3]),np.min(wind[3]))]
+ Pluie=[(precipitation[0][heure()],np.mean(precipitation[0])),(np.max(precipitation[1]),np.mean(precipitation[1])),(np.max(precipitation[2]),np.mean(precipitation[2])),(np.max(precipitation[3]),np.mean(precipitation[3]))]
+ Soleil=[(sunrise[0],sunset[0]),(sunrise[1],sunset[1]),(sunrise[2],sunset[2]),(sunrise[3],sunset[3])]
+ tab=[[Température[i] for i in range(4)],
+      [Humidité[i] for i in range(4)],
+      [Vent[i] for i in range(4)],
+      [Pluie[i] for i in range(4)],
+      [Soleil[i] for i in range(4)]
+      ]
+ Tab=pd.DataFrame(tab,index=['Température (en°C)','Humidité (en %)','Vitesse du vent (en km/h)','Précipitation (en mm)','Sunrise/Sunset'],
+    columns=[jours()[0],jours()[1],jours()[2], jours()[3]])
  html_Tab = Tab.to_html('meteo.html', index=False)
+ print(html_Tab)
  display(HTML(html_Tab))
 
-else:
-    print('La requête a échoué avec le code d\'état :', response.status_code)
+
+
+
+ 
+    
+
+ 
+
+
+ 
+
+ 
+
+ 
+
+
+
+
+
+
+
+
+
 
 
 
