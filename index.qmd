@@ -2,7 +2,7 @@
 title: "Météo Montpellier "
 ---
 Voici la météo à Montpellier sur les 4 prochains jours.
-Vous y retrouverez ainsi, la température, l'humidité, la vitesse du vent , les précipitations et l'heure du couché et du levé du soleil.
+Vous y retrouverez ainsi, la température, l'humidité, la vitesse du vent , les précipitations et l'heure du coucher et du lever du soleil.
 
 
 ```{python}
@@ -21,7 +21,6 @@ print(f" {date_heure()}")
 #| echo: false
 # %%
 import pandas as pd 
-import matplotlib.pyplot as plt
 import numpy as np
 import requests
 import json
@@ -40,18 +39,7 @@ reponse=requests.get(url)
 
 api_key = 'API météo Montpellier'
 
-# Créez un en-tête avec la clé API
-headers = {
-    'Authorization': f'Bearer {api_key}'
-}
-params = {
-	"latitude": 52.52,
-	"longitude": 13.41,
-	"hourly": ["temperature_2m", "relative_humidity_2m", "precipitation", "wind_speed_10m"],
-	"daily": ["temperature_2m_max", "temperature_2m_min", "sunrise", "sunset"],
-}
-
-response = requests.get(url, headers=headers, params=params)
+response = requests.get(url)
 if response.status_code == 200:
     # Obtenir le jour de la semaine actuel (en anglais)
  jour_semaine = maintenant.strftime('%A')  # Format du jour de la semaine (par exemple : "lundi", "mardi", etc.)
@@ -82,8 +70,8 @@ if response.status_code == 200:
     'Samedi':6,
     'Dimanche':7
  }
- j=correspondance.get(jour()) # jour actuelle
-
+ j=correspondance.get(jour()) # jour actuel
+#Cette fonction renvoie une liste des 4 prochains jours qui servira pour l'affichage du tableau 
  def jours():
    if (j==1):
       return(['Lundi', 'Mardi', 'Mercredi', 'Jeudi'])
@@ -98,7 +86,7 @@ if response.status_code == 200:
    elif(j==6):
       return(['Samedi', 'Dimanche', 'Lundi','Mardi'])
    else : return('Dimanche', 'Lundi','Mardi', 'Mercredi')
- # Affichez le contenu de la réponse
+ # On affiche le contenu de la réponse
  data=response.json()
  def date_heure():
     now=datetime.datetime.now()
@@ -110,9 +98,9 @@ if response.status_code == 200:
  time=list(chunked(time, 24))
  #On classe toutes nos données et on en fait des listes de par jour
  temp=data[0]['hourly']['temperature_2m']
- temp=list(chunked(temp, 24))
+ temp=list(chunked(temp, 24)) #on utilise chunked pour faire 4 listes de 24 éléments qui seront les données de temmpératures par jours
  humidity=data[0]['hourly']['relative_humidity_2m']
- humidity=list(chunked(humidity, 24))
+ humidity=list(chunked(humidity, 24)) 
  wind=data[0]['hourly']['wind_speed_10m']
  wind=list(chunked(wind, 24))
  precipitation=data[0]['hourly']['precipitation']
@@ -121,7 +109,7 @@ if response.status_code == 200:
  temp_min=data[0]['daily']['temperature_2m_min']
  sunrise=data[0]['daily']['sunrise']
  sunset=data[0]['daily']['sunset']
- #On regarde a quelle heure de la joournée on se situt 
+ #On regarde a quelle heure de la journée on se situt pour 
  def heure():
     for i in range(24):
        time[0][i]=time[0][i+1]
@@ -129,10 +117,11 @@ if response.status_code == 200:
        if (a==True):
           return (i)
  Température=[(temp[0][heure()],temp_max[0]),(temp_max[1],temp_min[1]),(temp_max[2],temp_min[2]),(temp_max[3],temp_min[3])]
- Humidité=[(humidity[0][heure()],"{:.3f}".format(np.mean(humidity[0]))),(np.max(humidity[1]),"{:.3f}".format(np.mean(humidity[1]))),(np.max(humidity[2]),"{:.3f}".format(np.mean(humidity[2]))),(np.max(humidity[3]),"{:.3f}".format(np.mean(humidity[3])))]
- Vent=[(wind[0][heure()],"{:.3f}".format(np.mean(wind[1]))),(np.max(wind[1]),np.min(wind[1])),(np.max(wind[2]),np.min(wind[2])),(np.max(wind[3]),np.min(wind[3]))]
- Pluie=[(precipitation[0][heure()],"{:.3f}".format(np.mean(precipitation[0]))),(np.max(precipitation[1]),"{:.3f}".format(np.mean(precipitation[1]))),(np.max(precipitation[2]),np.mean(precipitation[2])),(np.max(precipitation[3]),"{:.3f}".format(np.mean(precipitation[3])))]
+ Humidité=[(humidity[0][heure()],"{:.2f}".format(np.mean(humidity[0]))),(np.max(humidity[1]),"{:.2f}".format(np.mean(humidity[1]))),(np.max(humidity[2]),"{:.2f}".format(np.mean(humidity[2]))),(np.max(humidity[3]),"{:.2f}".format(np.mean(humidity[3])))]
+ Vent=[(wind[0][heure()],"{:.2f}".format(np.mean(wind[1]))),(np.max(wind[1]),np.min(wind[1])),(np.max(wind[2]),np.min(wind[2])),(np.max(wind[3]),np.min(wind[3]))]
+ Pluie=[(precipitation[0][heure()],"{:.2f}".format(np.mean(precipitation[0]))),(np.max(precipitation[1]),"{:.2f}".format(np.mean(precipitation[1]))),(np.max(precipitation[2]),np.mean(precipitation[2])),(np.max(precipitation[3]),"{:.2f}".format(np.mean(precipitation[3])))]
  Soleil=[(sunrise[0],sunset[0]),(sunrise[1],sunset[1]),(sunrise[2],sunset[2]),(sunrise[3],sunset[3])]
+ #On crée le tableau qui sera l'affichage
  tab=[[f"actuellement {Température[0][0]}°C, au max {Température[0][1]}°C",
  f"au max {Température[1][0]}°C, au min {Température[1][1]}°C",
  f"au max {Température[2][0]}°C, au min {Température[2][1]}°C",
@@ -150,7 +139,7 @@ if response.status_code == 200:
  f"au max {Pluie[2][0]}mm, en moyenne {Pluie[2][1]}mm",
  f"au max {Pluie[3][0]}mm, en moyenne {Pluie[3][1]}mm"],
  [Soleil[i] for i in range(4)]]
- Tab=pd.DataFrame(tab,index=['Température','Humidité','Vitesse du vent','Précipitation','Sunrise/Sunset'],
+ Tab=pd.DataFrame(tab,index=['Température','Humidité','Vitesse du vent','Précipitations','Sunrise/Sunset'],
     columns=[jours()[0],jours()[1],jours()[2], jours()[3]])
  html_Tab = Tab.to_html()
  display(HTML(html_Tab))
