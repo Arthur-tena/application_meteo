@@ -10,6 +10,8 @@ Vous y retrouverez ainsi, la température (max et min de chaque jours), l'humidi
 
 
 ```{python, fig.align=center}
+#| echo: false
+# %%
 import pandas as pd 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -140,10 +142,10 @@ if response.status_code == 200:
  f"au max {Pluie[2][0]}mm, en moyenne {Pluie[2][1]}mm",
  f"au max {Pluie[3][0]}mm, en moyenne {Pluie[3][1]}mm"],
  [Soleil[i] for i in range(4)]]
- Tab=pd.DataFrame(tab,index=['Temperature','Humidite','Vitesse du vent$','Precipitation','Sunrise/Sunset'],
+ Tab=pd.DataFrame(tab,index=['Temperature','Humidite','Vitesse du vent','Precipitation','Sunrise/Sunset'],
     columns=[jours()[0],jours()[1],jours()[2], jours()[3]])
  html_Tab = Tab.to_html()
- HTML(html_Tab)
+ display(HTML(html_Tab))
 ```
 
 
