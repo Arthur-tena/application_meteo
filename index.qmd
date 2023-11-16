@@ -2,12 +2,25 @@
 title: "Météo Montpellier "
 style: |
   body {
-    background-color: #e6f7ff; /* Bleu clair en hexadécimal */
+    background-color: #e6f7ff;
   }
 ---
 Voici la météo à Montpellier sur les 4 prochains jours.
-Vous y retrouverez ainsi, la température (max et min de chaque jours), l'humidité (actuelle et moyenne), la vitesse du vent (actuelle et min/max), les précipitation (actuelle et max/moyennes) et l'heure du couché et du levé du soleil.
+Vous y retrouverez ainsi, la température, l'humidité, la vitesse du vent , les précipitation et l'heure du couché et du levé du soleil.
 
+
+```{python}
+#| echo: false
+# %%
+import datetime 
+def date_heure():
+ now=datetime.datetime.now()
+ #On formate la date et l'heure
+ date_format = now.strftime('%Y-%m-%d')  # Format AAAA-MM-JJ
+ heure_format = now.strftime('%Hh%M')  # Format HH h MM
+ return f"Nous sommes le {date_format}, et il est : {heure_format}"
+print(f" {date_heure()}")
+```
 
 ```{python, fig.align=center}
 #| echo: false
@@ -121,9 +134,9 @@ if response.status_code == 200:
        if (a==True):
           return (i)
  Température=[(temp[0][heure()],temp_max[0]),(temp_max[1],temp_min[1]),(temp_max[2],temp_min[2]),(temp_max[3],temp_min[3])]
- Humidité=[(humidity[0][heure()],np.mean(humidity[0])),(np.max(humidity[1]),np.mean(humidity[1])),(np.max(humidity[2]),np.mean(humidity[2])),(np.max(humidity[3]),np.mean(humidity[3]))]
- Vent=[(wind[0][heure()],np.mean(wind[1])),(np.max(wind[1]),np.min(wind[1])),(np.max(wind[2]),np.min(wind[2])),(np.max(wind[3]),np.min(wind[3]))]
- Pluie=[(precipitation[0][heure()],np.mean(precipitation[0])),(np.max(precipitation[1]),np.mean(precipitation[1])),(np.max(precipitation[2]),np.mean(precipitation[2])),(np.max(precipitation[3]),np.mean(precipitation[3]))]
+ Humidité=[(humidity[0][heure()],"{:.3f}".format(np.mean(humidity[0]))),(np.max(humidity[1]),"{:.3f}".format(np.mean(humidity[1]))),(np.max(humidity[2]),"{:.3f}".format(np.mean(humidity[2]))),(np.max(humidity[3]),"{:.3f}".format(np.mean(humidity[3])))]
+ Vent=[(wind[0][heure()],"{:.3f}".format(np.mean(wind[1]))),(np.max(wind[1]),np.min(wind[1])),(np.max(wind[2]),np.min(wind[2])),(np.max(wind[3]),np.min(wind[3]))]
+ Pluie=[(precipitation[0][heure()],"{:.3f}".format(np.mean(precipitation[0]))),(np.max(precipitation[1]),"{:.3f}".format(np.mean(precipitation[1]))),(np.max(precipitation[2]),np.mean(precipitation[2])),(np.max(precipitation[3]),"{:.3f}".format(np.mean(precipitation[3])))]
  Soleil=[(sunrise[0],sunset[0]),(sunrise[1],sunset[1]),(sunrise[2],sunset[2]),(sunrise[3],sunset[3])]
  tab=[[f"actuellement {Température[0][0]}°C, au max {Température[0][1]}°C",
  f"au max {Température[1][0]}°C, au min {Température[1][1]}°C",
@@ -142,7 +155,7 @@ if response.status_code == 200:
  f"au max {Pluie[2][0]}mm, en moyenne {Pluie[2][1]}mm",
  f"au max {Pluie[3][0]}mm, en moyenne {Pluie[3][1]}mm"],
  [Soleil[i] for i in range(4)]]
- Tab=pd.DataFrame(tab,index=['Temperature','Humidite','Vitesse du vent','Precipitation','Sunrise/Sunset'],
+ Tab=pd.DataFrame(tab,index=['Température','Humidité','Vitesse du vent','Précipitation','Sunrise/Sunset'],
     columns=[jours()[0],jours()[1],jours()[2], jours()[3]])
  html_Tab = Tab.to_html()
  display(HTML(html_Tab))

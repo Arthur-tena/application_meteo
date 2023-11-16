@@ -37,4 +37,4 @@ format:
     citation-location: margin
     # self-contained: true
     # fig-format: svg
-    css: style.css
+    css: styles.css
