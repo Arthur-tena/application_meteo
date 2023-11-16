@@ -1,11 +1,12 @@
 on:
   schedule:
-    - cron: "0 * * * *" #actualisation toutes les heures
+    - cron: "0 * * * *" 
   workflow_dispatch:
   push:
     branches: main
 
 name: Quarto Publish
+
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
@@ -23,15 +24,12 @@ jobs:
         with:
           python-version: "3.12" 
           cache: "pip"
-      - run: python3 -m pip install numpy
-      - run: python3 -m pip install pandas
-      - run: python3 -m pip install matplotli.pyplot
-      - run: python3 -m pip install datetime
-      - run: python3 -m pip install more_itertools
-      - run: python3 -m pip install IPython.display
-      - run: python3 -m pip install requests
+      - run: python3 -m pip install jupyter
+      - run: python3 -m pip install -r requirements.txt
 
       - name: Render and Publish
         uses: quarto-dev/quarto-actions/publish@v2
         with:
           target: gh-pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
