@@ -6,3 +6,32 @@ on:
     branches: main
 
 name: Quarto Publish
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      - name: Set up Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+
+      - name: Install Python and Dependencies
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.12" 
+          cache: "pip"
+      - run: python3 -m pip install numpy
+      - run: python3 -m pip install pandas
+      - run: python3 -m pip install matplotli.pyplot
+      - run: python3 -m pip install datetime
+      - run: python3 -m pip install more_itertools
+      - run: python3 -m pip install IPython.display
+      - run: python3 -m pip install requests
+
+      - name: Render and Publish
+        uses: quarto-dev/quarto-actions/publish@v2
+        with:
+          target: gh-pages

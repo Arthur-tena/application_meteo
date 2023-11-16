@@ -1,2 +1,6 @@
-/.quarto/
 /.DS_Store/
+/.quarto/
+/_site/
+*.html
+site_lib
+/Images/
