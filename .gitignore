@@ -4,3 +4,5 @@
 *.html
 site_lib
 /Images/
+*.py
+*.png
