@@ -12,9 +12,8 @@ import datetime
 def date_heure():
  now=datetime.datetime.now()
  #On formate la date et l'heure
- date_format = now.strftime('%Y-%m-%d')  # Format AAAA-MM-JJ
- heure_format = now.strftime('%Hh%M')  # Format HH h MM
- return f"Nous sommes le {date_format}, et il est : {heure_format}"
+ date_format = now.strftime('%d-%m-%Y')  # Format JJ-MM-AAAA
+ return f"Nous sommes le {date_format}"
 print(f" {date_heure()}")
 ```
 
