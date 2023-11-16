@@ -112,9 +112,9 @@ if response.status_code == 200:
  Pluie=[(precipitation[0][heure()],np.mean(precipitation[0])),(np.max(precipitation[1]),np.mean(precipitation[1])),(np.max(precipitation[2]),np.mean(precipitation[2])),(np.max(precipitation[3]),np.mean(precipitation[3]))]
  Soleil=[(sunrise[0],sunset[0]),(sunrise[1],sunset[1]),(sunrise[2],sunset[2]),(sunrise[3],sunset[3])]
  tab=[[f"actuellement {Température[0][0]}°C, au max {Température[0][1]}°C",
- f"au min {Température[1][0]}°C, au max {Température[1][1]}°C",
- f"au min {Température[2][0]}°C, au max {Température[2][1]}°C",
- f"au min {Température[3][0]}°C, au max {Température[3][1]}°C"],
+ f"au max {Température[1][0]}°C, au min {Température[1][1]}°C",
+ f"au max {Température[2][0]}°C, au min {Température[2][1]}°C",
+ f"au max {Température[3][0]}°C, au min {Température[3][1]}°C"],
  [f"actuellement {Humidité[0][0]}%, en moyenne {Humidité[0][1]}%",
  f"au max {Humidité[1][0]}%, en moyenne {Humidité[1][1]}%",
  f"au max {Humidité[2][0]}%, en moyenne {Humidité[2][1]}%",
@@ -130,5 +130,5 @@ if response.status_code == 200:
  [Soleil[i] for i in range(4)]]
  Tab=pd.DataFrame(tab,index=['Temperature','Humidite','Vitesse du vent$','Precipitation','Sunrise/Sunset'],
     columns=[jours()[0],jours()[1],jours()[2], jours()[3]])
- html_Tab = Tab.to_html('meteo.html')
- display(HTML(html_Tab))
+ html_Tab = Tab.to_html()
+ HTML(html_Tab)
