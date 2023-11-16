@@ -35,11 +35,21 @@ jour_semaine = maintenant.strftime('%A')  # Format du jour de la semaine (par ex
 
 #On met l'URL de la clef API pour la retrouver avec requests
 url= 'https://api.open-meteo.com/v1/meteofrance?latitude=43.62&longitude=3.86&hourly=temperature_2m,relative_humidity_2m,precipitation,wind_speed_10m&daily=temperature_2m_max,temperature_2m_min,sunrise,sunset&timezone=Europe%2FBerlin'
+
+headers = {
+    'Authorization': f'Bearer {api_key}'
+}
+params = {
+	"latitude": 52.52,
+	"longitude": 13.41,
+	"hourly": ["temperature_2m", "relative_humidity_2m", "precipitation", "wind_speed_10m"],
+	"daily": ["temperature_2m_max", "temperature_2m_min", "sunrise", "sunset"],
+}
 reponse=requests.get(url)
 
 api_key = 'API météo Montpellier'
 
-response = requests.get(url)
+response = requests.get(url, headers=headers, params=params)
 if response.status_code == 200:
     # Obtenir le jour de la semaine actuel (en anglais)
  jour_semaine = maintenant.strftime('%A')  # Format du jour de la semaine (par exemple : "lundi", "mardi", etc.)
@@ -71,7 +81,7 @@ if response.status_code == 200:
     'Dimanche':7
  }
  j=correspondance.get(jour()) # jour actuel
-#Cette fonction renvoie une liste des 4 prochains jours qui servira pour l'affichage du tableau 
+ #Cette fonction renvoie une liste des 4 prochains jours qui servira pour l'affichage du tableau 
  def jours():
    if (j==1):
       return(['Lundi', 'Mardi', 'Mercredi', 'Jeudi'])
