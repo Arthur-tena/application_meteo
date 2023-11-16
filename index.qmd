@@ -35,7 +35,7 @@ jour_semaine = maintenant.strftime('%A')  # Format du jour de la semaine (par ex
 
 #On met l'URL de la clef API pour la retrouver avec requests
 url= 'https://api.open-meteo.com/v1/meteofrance?latitude=43.62&longitude=3.86&hourly=temperature_2m,relative_humidity_2m,precipitation,wind_speed_10m&daily=temperature_2m_max,temperature_2m_min,sunrise,sunset&timezone=Europe%2FBerlin'
-
+api_key = 'API météo Montpellier'
 headers = {
     'Authorization': f'Bearer {api_key}'
 }
