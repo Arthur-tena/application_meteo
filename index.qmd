@@ -1,9 +1,5 @@
 ---
 title: "Météo Montpellier "
-style: |
-  body {
-    background-color: #e6f7ff;
-  }
 ---
 Voici la météo à Montpellier sur les 4 prochains jours.
 Vous y retrouverez ainsi, la température, l'humidité, la vitesse du vent , les précipitation et l'heure du couché et du levé du soleil.
