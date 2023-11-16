@@ -1,0 +1,1 @@
+Sitemap: http://arthur-tena.github.io/application_meteo/sitemap.xml
