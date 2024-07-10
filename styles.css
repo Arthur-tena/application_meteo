@@ -6,3 +6,13 @@ body {
  margin: auto;
  color: black;
  }
+
+ table {
+    td {
+        padding: 10px;
+        border: 1px solid #dddddd;
+    }
+    .tr-odd {
+        background-color: #ffffff;
+    }
+ }
